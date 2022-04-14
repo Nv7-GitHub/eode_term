@@ -19,6 +19,7 @@ import (
 )
 
 var id string
+var guild string
 
 // https://stackoverflow.com/questions/35558166/when-to-randomize-auth-code-state-in-oauth2
 func genState(n int) (string, error) {
@@ -140,4 +141,9 @@ func Login() {
 			os.Exit(1)
 		}
 	}
+}
+
+func GuildLogin(name string) {
+	// TODO: Actually check if guild exists
+	guild = name
 }

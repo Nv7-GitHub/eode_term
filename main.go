@@ -95,7 +95,19 @@ func Run() {
 			Clear()
 			continue
 		}
+		if name == "gld" {
+			if len(args) != 1 {
+				Error("gld", "Expected 1 argument")
+				continue
+			}
+			GuildLogin(args[0])
+			continue
+		}
 
+		if guild == "" {
+			Error(name, "Before playing, login in to a server using %q!", "gld <server ID>")
+			continue
+		}
 		cmd, exists := cmds[name]
 		if !exists {
 			Error("io", "Unknown command: %q", name)
@@ -111,6 +123,9 @@ func Run() {
 }
 
 func main() {
+	Clear()
 	Login()
+	/*id = "567132457820749842"    // Nv7
+	guild = "705084182673621033" // Elemental on Discord*/
 	Run()
 }
