@@ -27,6 +27,10 @@ func Error(cmd string, format string, args ...interface{}) {
 	fmt.Printf("\u001b[31;1m[%s]\u001b[0m %s\n", cmd, fmt.Sprintf(format, args...))
 }
 
+func Clear() {
+	fmt.Print("\033[H\033[2J")
+}
+
 // Syntax: cmd "arg1 value" arg2
 
 type Command struct {
@@ -88,7 +92,7 @@ func Run() {
 			return
 		}
 		if name == "clear" {
-			fmt.Print("\033[H\033[2J")
+			Clear()
 			continue
 		}
 
@@ -107,5 +111,6 @@ func Run() {
 }
 
 func main() {
+	Login()
 	Run()
 }
