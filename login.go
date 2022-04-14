@@ -144,6 +144,10 @@ func Login() {
 }
 
 func GuildLogin(name string) {
-	// TODO: Actually check if guild exists
-	guild = name
+	_, rsp := Send(MethodGuild, map[string]any{"gld": name})
+	if rsp.Error == nil {
+		guild = name
+	} else {
+		Error("gld", "%s", *rsp.Error)
+	}
 }

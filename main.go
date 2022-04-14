@@ -88,6 +88,7 @@ func Run() {
 
 		// Command
 		if name == "exit" {
+			conn.Close()
 			Write("io", "Exiting...")
 			return
 		}
@@ -125,7 +126,14 @@ func Run() {
 func main() {
 	Clear()
 	Login()
+
 	/*id = "567132457820749842"    // Nv7
 	guild = "705084182673621033" // Elemental on Discord*/
+
+	// Connect
+	Conn(id)
+	if guild != "" { // Testing
+		Send(MethodGuild, map[string]any{"gld": guild})
+	}
 	Run()
 }
