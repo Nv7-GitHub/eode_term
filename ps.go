@@ -12,15 +12,17 @@ const PageLength = 20
 func RenderPage(items []int, cmd string) {
 	// Get info
 	Write(cmd, "Loading...")
+
 	names := make([]string, len(items))
+	info, res := Send(MethodElemInfo, map[string]any{"ids": items})
+	if res.Error != nil {
+		Error(cmd, "%s", *res.Error)
+		return
+	}
+
 	for i, v := range items {
-		info, res := Send(MethodElemInfo, map[string]any{"id": v})
-		if res.Error != nil {
-			Error(cmd, "%s", *res.Error)
-			return
-		}
 		var el Element
-		json.Unmarshal([]byte(info["data"].(string)), &el)
+		json.Unmarshal([]byte(info[strconv.Itoa(v)].(string)), &el)
 		names[i] = el.Name
 	}
 

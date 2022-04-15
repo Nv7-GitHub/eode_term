@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -27,18 +28,19 @@ func Wrap(val string) string {
 
 func Info(pars []interface{}) {
 	name := pars[0].(string)
-	id, res := Send(MethodElem, map[string]any{"name": name})
+	idV, res := Send(MethodElem, map[string]any{"name": name})
 	if res.Error != nil {
 		Error("info", "%s", *res.Error)
 		return
 	}
-	info, res := Send(MethodElemInfo, map[string]any{"id": int(id["id"].(float64))})
+	id := int(idV["id"].(float64))
+	info, res := Send(MethodElemInfo, map[string]any{"id": id})
 	if res.Error != nil {
 		Error("info", "%s", *res.Error)
 		return
 	}
 	var el map[string]interface{}
-	json.Unmarshal([]byte(info["data"].(string)), &el)
+	json.Unmarshal([]byte(info[strconv.Itoa(id)].(string)), &el)
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 func Combo(args []interface{}) {
@@ -25,13 +26,13 @@ func Combo(args []interface{}) {
 	el := int(d["id"].(float64)) // Elem3 ID
 
 	// Get info
-	info, res := Send(MethodElemInfo, map[string]any{"id": el})
+	info, res := Send(MethodElemInfo, map[string]any{"ids": []int{el}})
 	if res.Error != nil {
 		Error("combo", "%s", *res.Error)
 		return
 	}
 	var elem Element
-	json.Unmarshal([]byte(info["data"].(string)), &elem)
+	json.Unmarshal([]byte(info[strconv.Itoa(el)].(string)), &elem)
 
 	// Result
 	exists := d["exists"].(bool)
