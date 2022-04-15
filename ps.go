@@ -42,7 +42,7 @@ loop:
 			end = len(elems)
 		}
 		RenderPage(elems[PageLength*page:end], cmd)
-		Write(cmd, "Page %d of %d.", page, len(elems)/PageLength)
+		Write(cmd, "Page %d of %d.", page+1, len(elems)/PageLength+1)
 		fmt.Print("\u001b[34m(prev, next, num, exit):\u001b[0m ")
 
 		line, _, err := reader.ReadLine()
@@ -71,7 +71,7 @@ loop:
 			if err != nil {
 				Error(cmd, "Invalid number")
 			}
-			page = num
+			page = num - 1
 		}
 	}
 }
