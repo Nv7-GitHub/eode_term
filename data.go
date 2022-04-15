@@ -16,6 +16,7 @@ const (
 	MethodCombo
 	MethodElemInfo
 	MethodInv
+	MethodCategory
 )
 
 type Message struct {
