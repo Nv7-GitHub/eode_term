@@ -99,7 +99,7 @@ func Run() {
 		})
 		Cmd("gld", "gld [guild id]", func(args []interface{}) {
 			GuildLogin(args[0].(string))
-		})
+		}, STRING)
 
 		if guild == "" && name != "gld" {
 			Error(name, "Before playing, login in to a server using %q!", "gld <server ID>")
