@@ -20,7 +20,7 @@ func Help(args []interface{}) {
 	sort.Slice(vals, func(i, j int) bool {
 		return vals[i].Name < vals[j].Name
 	})
-	for _, cmd := range cmds {
+	for _, cmd := range vals {
 		t.AppendRow(table.Row{cmd.Name, cmd.Usage})
 	}
 	t.Render()

@@ -89,25 +89,19 @@ func Run() {
 		}
 
 		// Command
-		if name == "exit" {
+		Cmd("exit", "exit", func(_ []interface{}) {
 			conn.Close()
 			Write("io", "Exiting...")
-			return
-		}
-		if name == "clear" {
+			os.Exit(0)
+		})
+		Cmd("clear", "clear", func(_ []interface{}) {
 			Clear()
-			continue
-		}
-		if name == "gld" {
-			if len(args) != 1 {
-				Error("gld", "Expected 1 argument")
-				continue
-			}
-			GuildLogin(args[0])
-			continue
-		}
+		})
+		Cmd("gld", "gld [guild id]", func(args []interface{}) {
+			GuildLogin(args[0].(string))
+		})
 
-		if guild == "" {
+		if guild == "" && name != "gld" {
 			Error(name, "Before playing, login in to a server using %q!", "gld <server ID>")
 			continue
 		}
