@@ -29,12 +29,12 @@ func Info(pars []interface{}) {
 	name := pars[0].(string)
 	id, res := Send(MethodElem, map[string]any{"name": name})
 	if res.Error != nil {
-		Error("combo", "%s", *res.Error)
+		Error("info", "%s", *res.Error)
 		return
 	}
 	info, res := Send(MethodElemInfo, map[string]any{"id": int(id["id"].(float64))})
 	if res.Error != nil {
-		Error("combo", "%s", *res.Error)
+		Error("info", "%s", *res.Error)
 		return
 	}
 	var el map[string]interface{}
