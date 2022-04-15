@@ -20,7 +20,7 @@ func R(format string, args ...interface{}) Response {
 func Rg() Response { return Response{} }
 
 func Write(cmd string, format string, args ...interface{}) {
-	fmt.Printf("\u001b[32m[%s]\u001b[0m %s\n", cmd, fmt.Sprintf(format, args...))
+	fmt.Printf("\u001b[32;1m[%s]\u001b[0m %s\n", cmd, fmt.Sprintf(format, args...))
 }
 
 func Error(cmd string, format string, args ...interface{}) {
@@ -34,19 +34,21 @@ func Clear() {
 // Syntax: cmd "arg1 value" arg2
 
 type Command struct {
-	Fn   func([]interface{})
-	Typs []Type
+	Name  string
+	Fn    func([]interface{})
+	Typs  []Type
+	Usage string
 }
 
 var cmds = make(map[string]Command)
 
-func Cmd(name string, fn func([]interface{}), typs ...Type) {
-	cmds[name] = Command{Fn: fn, Typs: typs}
+func Cmd(name string, usage string, fn func([]interface{}), typs ...Type) {
+	cmds[name] = Command{Name: name, Fn: fn, Typs: typs, Usage: usage}
 }
 
 func Run() {
 	for {
-		fmt.Print("COMMAND: ")
+		fmt.Print("\u001b[33;1m>>>\u001b[0m ")
 		raw, _, err := reader.ReadLine()
 		if err != nil {
 			Error("io", err.Error())
@@ -125,10 +127,10 @@ func Run() {
 
 func main() {
 	Clear()
-	Login()
 
-	/*id = "567132457820749842"    // Nv7
-	guild = "705084182673621033" // Elemental on Discord*/
+	//Login()
+	id = "567132457820749842"    // Nv7
+	guild = "705084182673621033" // Elemental on Discord
 
 	// Connect
 	Conn(id)

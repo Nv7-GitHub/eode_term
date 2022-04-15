@@ -12,7 +12,7 @@ const (
 )
 
 func Match(typs []Type, vals []string) ([]interface{}, Response) {
-	if typs[len(typs)-1] == VARIADIC {
+	if len(typs) > 0 && typs[len(typs)-1] == VARIADIC {
 		if len(vals) < len(typs)-1 {
 			return nil, R("Expected at least %d arguments, got %d", len(typs), len(vals))
 		}

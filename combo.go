@@ -31,11 +31,7 @@ func Combo(args []interface{}) {
 		return
 	}
 	var elem Element
-	err := json.Unmarshal([]byte(info["data"].(string)), &elem)
-	if err != nil {
-		Error("combo", "%s", err.Error())
-		return
-	}
+	json.Unmarshal([]byte(info["data"].(string)), &elem)
 
 	// Result
 	exists := d["exists"].(bool)
@@ -47,5 +43,5 @@ func Combo(args []interface{}) {
 }
 
 func init() {
-	Cmd("combo", Combo, STRING, VARIADIC)
+	Cmd("combo", "combo [elem] [elem2] (elem3...)", Combo, STRING, VARIADIC)
 }
