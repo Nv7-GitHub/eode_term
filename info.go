@@ -34,7 +34,7 @@ func Info(pars []interface{}) {
 		return
 	}
 	id := int(idV["id"].(float64))
-	info, res := Send(MethodElemInfo, map[string]any{"id": id})
+	info, res := Send(MethodElemInfo, map[string]any{"ids": []int{id}})
 	if res.Error != nil {
 		Error("info", "%s", *res.Error)
 		return
