@@ -42,7 +42,9 @@ func Send(m Method, data map[string]any) (map[string]any, Response) {
 	return val.Data, Rg()
 }
 
-func Conn(id string) {
+func Conn() {
+	Write("login", "Connecting...")
+
 	var err error
 	conn, _, err = websocket.DefaultDialer.Dial(serv, nil)
 	if err != nil {
@@ -50,9 +52,30 @@ func Conn(id string) {
 		os.Exit(1)
 	}
 
-	err = conn.WriteMessage(websocket.TextMessage, []byte(id))
+	_, message, err := conn.ReadMessage()
 	if err != nil {
-		Error("conn", "Send error: %s", err.Error())
+		Error("login", "Login error: %s", err.Error())
 		os.Exit(1)
 	}
+	var url Resp
+	err = json.Unmarshal(message, &url)
+	if err != nil {
+		Error("conn", "Parse error: %s", err.Error())
+		os.Exit(1)
+	}
+	if url.Error != nil {
+		Error("login", "%s", *url.Error)
+		os.Exit(1)
+	}
+	Clear()
+	Write("login", "Login at %s", url.Data["url"].(string))
+
+	// Wait for ID
+	_, _, err = conn.ReadMessage()
+	if err != nil {
+		Error("login", "Login error: %s", err.Error())
+		os.Exit(1)
+	}
+
+	Write("login", "Login successful!")
 }

@@ -122,12 +122,10 @@ func Run() {
 func main() {
 	Clear()
 
-	Login()
-	/*id = "567132457820749842"    // Nv7
-	guild = "705084182673621033" // Elemental on Discord*/
+	/*guild = "705084182673621033" // Elemental on Discord*/
 
 	// Connect
-	Conn(id)
+	Conn()
 	if guild != "" { // Testing
 		Send(MethodGuild, map[string]any{"gld": guild})
 	}
