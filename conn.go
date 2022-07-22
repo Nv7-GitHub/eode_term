@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const serv = "wss://http.nv7haven.com/eode"
+const serv = "wss://eod.nv7haven.com/eode"
 
 var conn *websocket.Conn
 
